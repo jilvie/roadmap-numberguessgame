@@ -13,7 +13,14 @@ public class Game {
     {
         welcome();
         int num=random.nextInt(100)+1;
-        gamebegin(difficultlevelchoose(),num);
+        DifficultyLevel d=chooseDifficulty();
+        if(d!=null)
+        {
+            startgame(d,num);
+        }
+        else{
+            return;
+        }
     }
     private   void welcome()
     {
@@ -21,7 +28,7 @@ public class Game {
                 "I'm thinking of a number between 1 and 100.\n" +
                 "You have 5 chances to guess the correct number.");
     }
-    private   DifficultyLevel difficultlevelchoose()
+    private   DifficultyLevel chooseDifficulty()
     {
         System.out.println("Please select the difficulty level:\n" +
                 "1. Easy (10 chances)\n" +
@@ -42,24 +49,22 @@ public class Game {
                 "Let's start the game!");
         return difficultyLevel;
     }
-    private  void gamebegin(DifficultyLevel difficultyLevel,int num )
+    private  void startgame(DifficultyLevel difficultyLevel,int num )
     {
-        int attemp=0;
+        int attempts=0;
         int chance= difficultyLevel.getChances();
         while(chance > 0)
-        {   attemp++;
+        {   attempts++;
             System.out.println("Enter your guess:");
             int guess =this.scanner.nextInt();
             chance--;
             if(guess==num)
             {
-                System.out.println("Congratulations! You guessed the correct number in "+attemp+" attempts." );
+                System.out.println("Congratulations! You guessed the correct number in "+attempts+" attempts." );
                 break;
-            }
-            if (guess>num) {
+            } else if (guess>num) {
                 System.out.println("Incorrect! The number is less than "+guess+".");
-            }
-            if(guess<num) {
+            } else if (guess<num) {
                 System.out.println("Incorrect! The number is greater than "+guess+".");
             }
         }
